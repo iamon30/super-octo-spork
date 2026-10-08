@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>3D Mechanical Modeling – Interactive Module</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--cream:#f7f0dc;--ink:#1d2b3a;--blue:#1f5f9e;--line:#d9ccaa;--card:#fffaf0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Arial,sans-serif;color:var(--ink);background-color:var(--cream);
+background-image:linear-gradient(rgba(31,95,158,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(31,95,158,.09) 1px,transparent 1px),linear-gradient(rgba(31,95,158,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(31,95,158,.05) 1px,transparent 1px);background-size:80px 80px,80px 80px,16px 16px,16px 16px}
+.wm{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden;opacity:.09;font-weight:700;font-size:26px;color:#1d2b3a}
+.wm div{position:absolute;inset:-50%;transform:rotate(-30deg);display:flex;flex-wrap:wrap;gap:60px 70px;align-content:flex-start}
+header{background:var(--ink);color:#fff;padding:18px 16px;border-bottom:4px solid var(--blue)}
+header h1{margin:0;font-size:1.3rem}header p{margin:4px 0 0;opacity:.8;font-size:.9rem}
+main{max-width:860px;margin:0 auto;padding:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin:12px 0;box-shadow:0 2px 0 var(--line)}
+details{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:10px 14px}
+summary{cursor:pointer;font-weight:700;color:var(--blue)}
+details p,details li{line-height:1.5;font-size:.95rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+label{display:block;font-size:.85rem;font-weight:600;margin:8px 0 3px}
+input,select{width:100%;padding:10px;border:1px solid #b9a97c;border-radius:6px;background:#fff;font-size:1rem}
+button{background:var(--blue);color:#fff;border:0;border-radius:6px;padding:11px 18px;font-size:1rem;cursor:pointer;font-weight:600}
+button.alt{background:#6b5d3a}
+.scene{perspective:700px;width:150px;height:150px;margin:40px auto;touch-action:none;cursor:grab}
+.cube{position:relative;width:100%;height:100%;transform-style:preserve-3d}
+.f{position:absolute;width:150px;height:150px;border:2px solid var(--blue);background:rgba(31,95,158,.14);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--blue)}
+.q{border-left:4px solid var(--blue)}
+.q h3{margin:0 0 8px;font-size:1rem}
+.opt{display:flex;gap:8px;align-items:flex-start;padding:7px 8px;border:1px solid var(--line);border-radius:6px;margin:5px 0;background:#fff;cursor:pointer;font-size:.95rem}
+.opt input{width:auto;margin-top:3px}
+.err{color:#b00020;font-size:.85rem;min-height:1em}
+.hide{display:none}
+.warn{background:#fff3cd;border:1px solid #e0c36a;padding:8px 12px;border-radius:6px;font-size:.88rem}
+#admin{position:fixed;inset:0;background:rgba(29,43,58,.6);z-index:100;overflow:auto;padding:16px}
+#admin .card{max-width:700px;margin:20px auto}
+table{width:100%;border-collapse:collapse;font-size:.8rem}td,th{border:1px solid var(--line);padding:4px;text-align:left}
+.foot{text-align:center;font-size:.8rem;opacity:.7;padding:20px}
+.vid a{display:inline-block;background:var(--blue);color:#fff;text-decoration:none;padding:6px 10px;border-radius:6px;margin:3px 3px 0 0;font-size:.82rem;font-weight:600}.bar{height:8px;background:#e6dcc0;border-radius:4px;margin:8px 0}.bar i{display:block;height:100%;background:var(--blue);border-radius:4px}.chips span{display:inline-block;font-size:.78rem;padding:3px 8px;border-radius:12px;background:#efe4c3;margin:2px 3px 0 0}.chips .ok{background:#cfe8d3}.chips .cur{background:var(--blue);color:#fff}
+.vl{font-size:.85rem;margin:2px 0 8px}.vl a{color:#c0392b;font-weight:600}.vid{border-left:4px solid #c0392b}
+table.cmd{margin:8px 0;background:#fff}table.cmd th{background:#efe4c3}.card ol,details ol{line-height:1.5;font-size:.95rem}
+</style></head><body>
+<div class="wm" id="wm"><div></div></div>
+<header><h1>Introduction to 3D Mechanical Modeling</h1><p>AutoCAD Mechanical • Interactive Module &amp; Quiz • Prepared by RAYMOND D. ENTAL</p></header>
+<main>
+<!-- ================= MODULE ================= -->
+<h2>📘 Learn</h2>
+<div class="card"><b>🎯 Learning objectives</b>
+<ol><li>Switch to and navigate the 3D Modeling workspace.</li><li>Control the UCS to draw on any plane or face.</li><li>Create the six primitive solids (Box, Cylinder, Cone, Sphere, Wedge, Torus).</li><li>Build solids with Extrude, Revolve, Loft, Sweep and PressPull.</li><li>Orbit, pan, zoom and change visual styles confidently.</li></ol>
+<b>Tools needed:</b> AutoCAD (Mechanical or AutoCAD with 3D Modeling workspace), mouse with scroll wheel, Orthographic (F8) &amp; Object Snap (F3) on.</div>
+
+<div class="card vid"><b>🎬 Watch: “AutoCAD 3D – Complete Tutorial for Beginners”</b> <span style="font-size:.85rem">(CAD in Black • YouTube • educational use)</span>
+<p style="margin:6px 0">Watch the full video, then jump to the part you need. Quiz items are based on this module and video.</p>
+<a href="https://youtu.be/y41ZgOdExOo" target="_blank" rel="noopener">▶ Full video</a>
+<a href="https://youtu.be/y41ZgOdExOo?t=44" target="_blank" rel="noopener">Workspaces 0:44</a>
+<a href="https://youtu.be/y41ZgOdExOo?t=108" target="_blank" rel="noopener">PressPull 1:48</a>
+<a href="https://youtu.be/y41ZgOdExOo?t=187" target="_blank" rel="noopener">Visual styles 3:07</a>
+<a href="https://youtu.be/y41ZgOdExOo?t=244" target="_blank" rel="noopener">UCS &amp; viewpoints 4:04</a>
+<a href="https://youtu.be/y41ZgOdExOo?t=557" target="_blank" rel="noopener">Dynamic UCS 9:17</a>
+<a href="https://youtu.be/y41ZgOdExOo?t=610" target="_blank" rel="noopener">Viewports 10:10</a>
+<a href="https://youtu.be/y41ZgOdExOo?t=828" target="_blank" rel="noopener">Primitives 13:48</a>
+<a href="https://youtu.be/y41ZgOdExOo?t=964" target="_blank" rel="noopener">Extrude 16:04</a>
+<a href="https://youtu.be/y41ZgOdExOo?t=1204" target="_blank" rel="noopener">Boolean ops 20:04</a>
+<a href="https://youtu.be/y41ZgOdExOo?t=1485" target="_blank" rel="noopener">Loft 24:45</a>
+<a href="https://youtu.be/y41ZgOdExOo?t=1769" target="_blank" rel="noopener">Revolve 29:29</a>
+<a href="https://youtube.com/playlist?list=PLe_I-JWckL7HOx1Ft6AdoZVUyVepxDnf4" target="_blank" rel="noopener">More: playlist</a></div>
+
+<details open><summary>1. The 3D Modeling Workspace</summary><p class="vl">🎬 Video: <a href="https://youtu.be/y41ZgOdExOo?t=44" target="_blank" rel="noopener">Workspaces 0:44</a> • <a href="https://youtu.be/y41ZgOdExOo?t=187" target="_blank" rel="noopener">Visual styles 3:07</a> • <a href="https://youtu.be/y41ZgOdExOo?t=610" target="_blank" rel="noopener">Viewports 10:10</a></p>
+<p>A <b>solid</b> has volume, mass and faces/edges; a 2D drawing only has lines. Mechanical parts (shafts, brackets, housings) are modeled as solids so they can be viewed from any angle, measured, and turned into drawings.</p>
+<ul><li><b>Switch workspace:</b> click the gear icon (bottom right) → <b>3D Modeling</b>.</li>
+<li><b>Ribbon tabs:</b> Home (Modeling, Mesh, Solid Editing, Draw, Modify, Coordinates, View panels), Solid, Surface, Mesh, Visualize.</li>
+<li><b>ViewCube</b> (top right) – click faces/corners to change view; <b>Navigation Bar</b> – Pan, Zoom, Orbit, SteeringWheel.</li>
+<li><b>Grid</b> (F7) &amp; <b>Ortho</b> (F8) &amp; <b>Object Snap</b> (F3) help place points accurately.</li>
+<li><b>Viewports:</b> split Model space into 2–4 views (Top, Front, Right, Isometric) to see the part from many sides at once.</li></ul>
+<p><b>Visual styles:</b> 2D Wireframe • Wireframe (all edges) • Hidden (hidden lines removed) • Realistic (materials) • Shaded • Shaded with Edges • Conceptual • X-ray.</p>
+<p><b>Try it:</b> drag the cube to orbit, scroll to zoom — the same idea as the ViewCube.</p>
+<div class="scene" id="scene"><div class="cube" id="cube">
+<div class="f" style="transform:translateZ(75px)">FRONT</div><div class="f" style="transform:rotateY(180deg) translateZ(75px)">BACK</div>
+<div class="f" style="transform:rotateY(90deg) translateZ(75px)">RIGHT</div><div class="f" style="transform:rotateY(-90deg) translateZ(75px)">LEFT</div>
+<div class="f" style="transform:rotateX(90deg) translateZ(75px)">TOP</div><div class="f" style="transform:rotateX(-90deg) translateZ(75px)">BOTTOM</div></div></div></details>
+
+<details><summary>2. User Coordinate System (UCS)</summary><p class="vl">🎬 Video: <a href="https://youtu.be/y41ZgOdExOo?t=244" target="_blank" rel="noopener">UCS &amp; viewpoints 4:04</a> • <a href="https://youtu.be/y41ZgOdExOo?t=454" target="_blank" rel="noopener">Draw on a face 7:34</a> • <a href="https://youtu.be/y41ZgOdExOo?t=557" target="_blank" rel="noopener">Dynamic UCS 9:17</a></p>
+<p><b>WCS</b> (World Coordinate System) is fixed. The <b>UCS</b> is a movable copy you place wherever you need to draw. Everything you draw lies on the <b>XY plane</b> of the current UCS, and <b>Z</b> is the height.</p>
+<ul><li><b>Right-hand rule:</b> thumb = X, index finger = Y, middle finger = Z. Curling your fingers from X to Y shows the positive rotation.</li>
+<li><b>Command:</b> <code>UCS</code> → options: <b>Face</b> (align to a solid's face), <b>Origin</b> (move), <b>3 point</b>, <b>X / Y / Z</b> (rotate about an axis), <b>World</b> (back to WCS), <b>Previous</b>.</li>
+<li><b>Dynamic UCS</b> (toolbar button or F6): hover over a face and the UCS aligns automatically while you draw on it — no manual UCS needed.</li>
+<li><b>UCS icon</b> shows axis directions; a small box at its base means you are in the WCS.</li></ul>
+<p><b>Typical workflow:</b> 1) <code>UCS</code> → <b>Face</b> → click the face. 2) Draw the circle/rectangle on that face. 3) Use PressPull or Extrude to add or cut material. 4) <code>UCS</code> → <b>World</b> to reset.</p></details>
+
+<details><summary>3. Primitive Solids</summary><p class="vl">🎬 Video: <a href="https://youtu.be/y41ZgOdExOo?t=828" target="_blank" rel="noopener">Primitives 13:48</a> • <a href="https://youtu.be/y41ZgOdExOo?t=852" target="_blank" rel="noopener">Box 14:12</a> • <a href="https://youtu.be/y41ZgOdExOo?t=893" target="_blank" rel="noopener">Cylinder 14:53</a> • <a href="https://youtu.be/y41ZgOdExOo?t=911" target="_blank" rel="noopener">Cone 15:11</a> • <a href="https://youtu.be/y41ZgOdExOo?t=1204" target="_blank" rel="noopener">Boolean ops 20:04</a></p>
+<p>Primitives are ready-made basic solids found in <b>Home ▸ Modeling</b> or by typing the command.</p>
+<table class="cmd"><tr><th>Solid</th><th>Command</th><th>Input needed</th><th>Mechanical examples</th></tr>
+<tr><td>Box</td><td>BOX</td><td>Corner + length, width, height</td><td>Base plate, block, V-block</td></tr>
+<tr><td>Cylinder</td><td>CYLINDER</td><td>Center, radius/diameter, height</td><td>Pin, shaft, bushing blank</td></tr>
+<tr><td>Cone</td><td>CONE</td><td>Center, base radius, height (top radius optional)</td><td>Lathe center, countersink, nozzle</td></tr>
+<tr><td>Sphere</td><td>SPHERE</td><td>Center + radius</td><td>Ball bearing, knob</td></tr>
+<tr><td>Wedge</td><td>WEDGE</td><td>Corner + length, width, height (sloped face)</td><td>Ramp, key/gib, stop</td></tr>
+<tr><td>Torus</td><td>TORUS</td><td>Center, torus (path) radius, tube radius</td><td>O-ring, ring, handle</td></tr></table>
+<p><b>Tips:</b> Type <code>@L,W,H</code> or click points with Ortho on. For <b>Torus</b>, the tube radius must be smaller than the torus radius. Other primitives: <b>Pyramid</b> and <b>Polysolid</b> (wall-like solid from a path).</p>
+<p><b>Boolean operations</b> combine primitives into parts: <b>UNION</b> (join), <b>SUBTRACT</b> (cut one solid from another, e.g. drilling a hole), <b>INTERSECT</b> (keep the overlapping volume).</p></details>
+
+<details><summary>4. Extrude, Revolve, Loft, Sweep, PressPull</summary><p class="vl">🎬 Video: <a href="https://youtu.be/y41ZgOdExOo?t=108" target="_blank" rel="noopener">PressPull 1:48</a> • <a href="https://youtu.be/y41ZgOdExOo?t=964" target="_blank" rel="noopener">Extrude 16:04</a> • <a href="https://youtu.be/y41ZgOdExOo?t=1073" target="_blank" rel="noopener">PressPull 17:53</a> • <a href="https://youtu.be/y41ZgOdExOo?t=1485" target="_blank" rel="noopener">Loft 24:45</a> • <a href="https://youtu.be/y41ZgOdExOo?t=1759" target="_blank" rel="noopener">Revolve 29:19</a></p>
+<p>These commands turn <b>2D profiles into 3D solids</b>. The profile must be a <b>closed</b> object (circle, closed polyline, rectangle, region). Use <code>PEDIT</code> ▸ Join or <code>REGION</code> to close separate lines.</p>
+<table class="cmd"><tr><th>Command</th><th>How it works</th><th>Steps</th><th>Best for</th></tr>
+<tr><td>EXTRUDE (EXT)</td><td>Gives height to a profile, straight, along a path, or with a taper angle</td><td>EXT → select profile → Enter → type height (or Path/Taper)</td><td>Plates, flanges, brackets</td></tr>
+<tr><td>REVOLVE (REV)</td><td>Spins a profile around an axis (360° or less)</td><td>REV → select half-profile → pick axis points → angle</td><td>Shafts, pulleys, bolts, bushings</td></tr>
+<tr><td>LOFT</td><td>Blends two or more cross-sections (optionally with guides/path)</td><td>LOFT → pick sections in order → Enter → Enter (or options)</td><td>Funnels, ducts, transitions</td></tr>
+<tr><td>SWEEP</td><td>Moves a profile along a path (can twist/scale)</td><td>SWEEP → select profile → select path</td><td>Pipes, springs, hooks, bent rods</td></tr>
+<tr><td>PRESSPULL (PRESS)</td><td>Pushes/pulls a bounded area or face; adds or removes material</td><td>PRESS → click inside area → move cursor/type distance</td><td>Quick bosses, pockets, holes</td></tr></table>
+<p><b>Choosing:</b> straight height → Extrude • rotational part → Revolve • changing shape between sections → Loft • follows a curve → Sweep • quick edit on a face → PressPull.</p>
+<p><b>Common mistakes:</b> profile not closed • sections picked in the wrong order for Loft • path touching the profile plane incorrectly for Sweep • forgetting to set the UCS before drawing the profile.</p></details>
+
+<details><summary>5. Viewing and Navigation in 3D Space</summary><p class="vl">🎬 Video: <a href="https://youtu.be/y41ZgOdExOo?t=187" target="_blank" rel="noopener">Visual styles 3:07</a> • <a href="https://youtu.be/y41ZgOdExOo?t=244" target="_blank" rel="noopener">Viewpoints 4:04</a> • <a href="https://youtu.be/y41ZgOdExOo?t=610" target="_blank" rel="noopener">Viewports 10:10</a></p>
+<table class="cmd"><tr><th>Action</th><th>How</th></tr>
+<tr><td>Zoom</td><td>Scroll wheel (or <code>ZOOM</code> ▸ Extents / Window)</td></tr>
+<tr><td>Pan</td><td>Hold wheel button and drag</td></tr>
+<tr><td>3D Orbit</td><td><b>Shift + wheel button</b> and drag, or <code>3DORBIT</code></td></tr>
+<tr><td>Preset views</td><td>ViewCube, or View ▸ Top / Front / Right / SE Isometric</td></tr>
+<tr><td>Visual style</td><td>View panel dropdown or <code>VSCURRENT</code></td></tr>
+<tr><td>Multiple views</td><td><code>VPORTS</code> to split Model space</td></tr>
+<tr><td>Full wheel</td><td>SteeringWheel (Navigation Bar)</td></tr></table>
+<p><b>Tip:</b> Use an <b>isometric view</b> to check the form and <b>Top/Front/Right</b> views to check dimensions. Switch to <b>Hidden</b> or <b>Shaded with Edges</b> to read the part clearly.</p></details>
+
+<details><summary>📖 Key terms (glossary)</summary><table class="cmd">
+<tr><td><b>Solid</b></td><td>3D object with volume, faces and edges.</td></tr>
+<tr><td><b>Primitive</b></td><td>Basic ready-made solid (box, cylinder, cone, sphere, wedge, torus).</td></tr>
+<tr><td><b>Profile</b></td><td>Closed 2D shape used to create a solid.</td></tr>
+<tr><td><b>Path</b></td><td>Line/curve a profile follows (Sweep, Extrude along path).</td></tr>
+<tr><td><b>Region</b></td><td>2D closed area created from closed objects with REGION.</td></tr>
+<tr><td><b>WCS / UCS</b></td><td>Fixed world axes / user-defined movable axes.</td></tr>
+<tr><td><b>Boolean operation</b></td><td>Union, Subtract or Intersect of solids.</td></tr>
+<tr><td><b>Orbit / Pan / Zoom</b></td><td>Rotate, slide and scale the view (not the model).</td></tr>
+<tr><td><b>Viewport</b></td><td>A window showing one view of the model.</td></tr></table></details>
+<details><summary>⌨️ Command cheat sheet</summary><p><code>BOX</code> <code>CYL</code> <code>CONE</code> <code>SPHERE</code> <code>WEDGE</code> <code>TORUS</code> • <code>EXT</code> <code>REV</code> <code>LOFT</code> <code>SWEEP</code> <code>PRESS</code> • <code>UNION</code> <code>SU</code> (subtract) <code>IN</code> (intersect) • <code>UCS</code> <code>3DORBIT</code> <code>VPORTS</code> <code>REGION</code> <code>VSCURRENT</code> • F3 Osnap, F6 Dynamic UCS, F7 Grid, F8 Ortho.</p></details>
+<details><summary>✍️ Practice exercises</summary>
+<ol><li>Model a 100 × 60 × 10 mm base plate (BOX), then drill four Ø10 holes with CYLINDER + SUBTRACT.</li>
+<li>Draw a stepped shaft half-profile and REVOLVE it 360° about its centerline.</li>
+<li>LOFT a Ø60 circle to a 50 × 50 square 80 mm above it to make a transition duct.</li>
+<li>Draw a Ø10 circle and SWEEP it along an arc-and-line path to make a bent pipe.</li>
+<li>Use UCS ▸ Face on the top of a block, draw a rectangle, and PRESSPULL it down 5 mm to cut a pocket.</li></ol></details>
+
+<details><summary>📌 Quick summary</summary>
+<ul><li>Use the <b>3D Modeling</b> workspace; navigate with wheel, Shift+wheel and the ViewCube.</li>
+<li>Set the <b>UCS</b> so the XY plane matches the face you are drawing on.</li>
+<li>Build basics with <b>primitives</b> and combine them with <b>Union / Subtract / Intersect</b>.</li>
+<li>Convert closed profiles with <b>Extrude, Revolve, Loft, Sweep</b>; edit quickly with <b>PressPull</b>.</li></ul></details>
+
+<!-- ================= QUIZ ================= -->
+<h2>📝 Quiz (50 items – 10 per topic)</h2>
+<div class="card" id="reg">
+<div class="warn">⚠️ The quiz has <b>5 short topics (10 items each)</b>. Answer one topic at a time, or tap <b>Save &amp; continue later</b> and resume with the same name and email on this device. Leaving the tab or window during a topic <b>automatically closes that topic</b> (unanswered items count wrong). Items are unique and shuffled for each student.</div>
+<div class="grid">
+<div><label>Last Name</label><input id="ln" autocomplete="off"></div>
+<div><label>First Name</label><input id="fn" autocomplete="off"></div>
+<div><label>Middle Initial</label><input id="mi" maxlength="2" autocomplete="off"></div>
+<div><label>Section</label><select id="sec"><option value="">Select section ▼</option><option>4A</option><option>4B</option><option>4C</option><option>4D</option><option>4E</option></select></div>
+</div>
+<label>Valid Email Address</label><input id="em" type="email" placeholder="name@example.com">
+<div class="err" id="rerr"></div>
+<button id="start">Start Quiz</button>
+</div>
+<div id="quiz" class="hide"><div class="card" id="qinfo"></div><div id="qs"></div><div class="err" id="qerr"></div><button id="submit">Submit Topic</button> <button class="alt" id="later">Save &amp; continue later</button></div>
+<div id="done" class="hide card"><h3>✅ Quiz Finished</h3><p id="dmsg"></p><canvas id="cv" style="max-width:100%;border:1px solid var(--line)"></canvas><p><button id="dl">Download Result Again</button></p></div>
+<p class="foot">© RAYMOND D. ENTAL • <a href="#" id="adm">Admin</a></p>
+</main>
+
+<div id="admin" class="hide"><div class="card">
+<h3>🔐 Admin Panel</h3>
+<div id="alogin"><label>Password</label><input id="apw" type="password"><div class="err" id="aerr"></div><button id="alog">Login</button> <button class="alt" id="aclose0">Close</button></div>
+<div id="apanel" class="hide">
+<label>Google Apps Script Web App URL (score recorder)</label><input id="aurl"><p style="font-size:.8rem">Paste your Apps Script “/exec” link here, then Save. (You can also edit <code>SHEET_URL</code> in the code.)</p>
+<button id="asave">Save URL</button> <a href="https://docs.google.com/spreadsheets/d/1mK9CEzJtxtVXs4vm92woSkTJrA2fU4MkhCuRau6WVp0/edit" target="_blank" rel="noopener"><button class="alt">Open Student Score Recorder</button></a>
+<label style="margin-top:12px"><input type="checkbox" id="alock" style="width:auto"> Lock quiz (students cannot start, on this browser)</label>
+<h4>Attempts logged on this device</h4><div style="overflow-x:auto"><table id="atbl"></table></div>
+<button class="alt" id="aclear">Clear attempts</button> <button id="aclose">Close</button>
+</div></div></div>
+
+<script>
+/* =====================================================================
+   ▼▼▼  PASTE YOUR GOOGLE SHEET (APPS SCRIPT WEB APP “/exec”) LINK HERE  ▼▼▼
+   ===================================================================== */
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbzJ8H-6P_CTDRppEMCzBIv4wz6iYvton2NbkHtKhZmNa3cec0AOXbIMvAV270S6PsF6yQ/exec";
+/* ===================================================================== */
+const ADMIN_PW="RDE_2026", OWNER="RAYMOND D. ENTAL", $=id=>document.getElementById(id);
+const ls={g:k=>{try{return localStorage.getItem(k)}catch(e){return null}},s:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+const url=()=>ls.g("sheetUrl")||SHEET_URL;
+const now=()=>new Date().toLocaleString("en-PH",{timeZone:"Asia/Manila",dateStyle:"medium",timeStyle:"medium"});
+// watermark
+(function(){const d=$("wm").firstChild;for(let i=0;i<220;i++){const s=document.createElement("span");s.textContent=OWNER;d.appendChild(s)}})();
+// cube
+let rx=-25,ry=35,sc=1,drag=null;const cube=$("cube"),scene=$("scene");
+const upd=()=>cube.style.transform=`scale(${sc}) rotateX(${rx}deg) rotateY(${ry}deg)`;upd();
+scene.onpointerdown=e=>{drag=[e.clientX,e.clientY];scene.setPointerCapture(e.pointerId)};
+scene.onpointermove=e=>{if(!drag)return;ry+=(e.clientX-drag[0])*.6;rx-=(e.clientY-drag[1])*.6;drag=[e.clientX,e.clientY];upd()};
+scene.onpointerup=()=>drag=null;
+scene.onwheel=e=>{e.preventDefault();sc=Math.min(2,Math.max(.5,sc-e.deltaY*.001));upd()};
+// question bank: [question, correct, wrong, wrong, wrong]
+const BANK=[
+["Which AutoCAD workspace is used for 3D solid modeling?","3D Modeling","Drafting & Annotation","Layer Manager","Sheet Set"],
+["The ViewCube is used to…","switch and orient views of a 3D model","change layer colors","create dimensions","print drawings"],
+["Which visual style displays only the edges of the model as lines?","Wireframe","Realistic","Conceptual","Shaded"],
+["Holding Shift while dragging the mouse wheel button performs…","3D Orbit","Pan","Zoom Window","Regen"],
+["Dragging the mouse wheel button alone performs…","Pan","3D Orbit","Extrude","Revolve"],
+["Scrolling the mouse wheel will…","zoom in and out","rotate the UCS","create a box","close the drawing"],
+["UCS stands for…","User Coordinate System","Universal Cartesian Scale","Unit Construction Standard","Unified Command Set"],
+["In the default coordinate system, which axis points upward from the XY plane?","Z","X","Y","None of the axes"],
+["Which command changes the origin and orientation of the coordinate system?","UCS","VPORTS","LAYER","PURGE"],
+["The right-hand rule is used to determine…","positive axis and rotation directions","line weights","text height","layer order"],
+["Why set the UCS on a solid's face before sketching on it?","the XY drawing plane aligns with that face","it hides the solid","it deletes the WCS","it changes the units"],
+["Which command creates a solid with six rectangular faces?","BOX","CONE","TORUS","SPHERE"],
+["The CYLINDER command mainly needs…","a base radius (or diameter) and a height","only a sweep path","two rails","a tube radius and path radius"],
+["Which primitive has a circular base that tapers to a point or smaller top?","Cone","Wedge","Torus","Box"],
+["A SPHERE is defined primarily by its…","center and radius","height and base","path and profile","two cross-sections"],
+["A WEDGE primitive looks like…","a box cut diagonally with a sloped face","a doughnut","a ball","a long tube"],
+["The TORUS command requires…","a tube radius and a torus radius","only a height","a path and a profile","a taper angle"],
+["EXTRUDE creates a 3D solid by…","giving height to a closed 2D profile","rotating a profile about an axis","blending several cross-sections","changing the visual style"],
+["REVOLVE creates a solid by…","rotating a closed profile about an axis","pulling a face","blending cross-sections","extruding straight up"],
+["LOFT is used to…","create a solid between two or more cross-sections","rotate a profile about an axis","move a profile along a path","change the UCS"],
+["SWEEP creates a solid by…","moving a profile along a path","blending cross-sections","rotating around an axis","setting a UCS"],
+["PRESSPULL is used to…","push or pull bounded areas to add or remove material","change the visual style","orbit the model","save the drawing"],
+["A shaft or pulley with a circular cross-section is best modeled with…","REVOLVE","WEDGE","XLINE","PURGE"],
+["To use EXTRUDE on a profile, it should be…","a closed polyline, circle or region","an open set of separate lines","a text object","a dimension"],
+["A pipe that bends along an arc path is best created with…","SWEEP","BOX","SPHERE","WEDGE"],
+["A transition piece from a circle to a square is best modeled using…","LOFT","CYLINDER","TORUS","PRESSPULL"],
+["Which command lets you rotate your view freely in 3D space?","3DORBIT","EXTRUDE","LOFT","TORUS"],
+["In the video, which command first turns a drawn rectangle into a solid?","PRESSPULL","REVOLVE","SWEEP","ZOOM"],
+["Dynamic UCS lets you…","draw on a face without setting the UCS manually","delete the WCS","change the visual style","save viewports"],
+["Which Boolean operation joins two solids into one?","UNION","SUBTRACT","INTERSECT","SLICE"],
+["Which Boolean operation removes one solid from another, such as drilling a hole?","SUBTRACT","UNION","INTERSECT","LOFT"],
+["Which Boolean operation keeps only the overlapping volume of two solids?","INTERSECT","UNION","SUBTRACT","PRESSPULL"],
+["Viewports in model space are used to…","display several views of the model at once","change the drawing units","create new layers","insert blocks"],
+["Which function key toggles Dynamic UCS?","F6","F3","F8","F2"],
+["For a TORUS, the tube radius must be…","smaller than the torus (path) radius","equal to the height","larger than the torus radius","zero"],
+["The REVOLVE command needs a profile and…","an axis of revolution","a guide path only","a taper height","a second solid"]];
+
+const N1=[["The 3D Modeling workspace is switched using…","the workspace switching (gear) icon","the Layer Manager","the Plot dialog","the Block Editor"],
+["Which visual style hides lines behind faces?","Hidden","Wireframe","Conceptual","X-ray"],
+["To preview a part with its assigned materials, choose the…","Realistic visual style","Hidden visual style","Wireframe visual style","2D Wireframe visual style"],
+["Which key toggles Ortho mode?","F8","F6","F7","F10"],
+["Which key toggles the grid display?","F7","F8","F3","F6"],
+["Which key toggles Object Snap?","F3","F7","F8","F2"],
+["A solid differs from a 2D drawing because it has…","volume with faces and edges","only lines","only text","only dimensions"],
+["Solid primitive tools are found on which part of the ribbon?","Home tab – Modeling panel","Annotate tab – Text","Output tab – Plot","Insert tab – Block"],
+["Splitting model space into several windows is done with…","VPORTS","PURGE","STRETCH","OOPS"],
+["Which tool changes the view by clicking its faces and corners?","ViewCube","Layer Manager","Properties palette","Dimension Style"]];
+const N2=[["The icon showing the X, Y and Z directions is the…","UCS icon","ViewCube","Dimension style","Block"],
+["Which UCS option aligns the XY plane to a solid's face?","Face","World","Previous","Save"],
+["Which UCS option returns to the World Coordinate System?","World","Face","Origin","Z"],
+["In the right-hand rule, the thumb points along…","X","Y","Z","the path"],
+["Which UCS option moves the origin to a new point?","Origin","Face","World","Named"],
+["Objects you draw lie on which plane of the current UCS?","XY plane","YZ plane","XZ plane","Z axis only"],
+["The WCS is…","the fixed world coordinate system","a movable user system","a visual style","a type of solid"]];
+const N3=[["Which command creates a wall-like solid from a path with width and height?","POLYSOLID","SPHERE","TORUS","CONE"],
+["Which primitive suits an O-ring?","TORUS","BOX","WEDGE","CONE"],
+["Which primitive suits a ball-bearing blank?","SPHERE","CYLINDER","WEDGE","BOX"],
+["Which primitive suits a pin or shaft blank?","CYLINDER","TORUS","WEDGE","SPHERE"]];
+const N4=[["Which EXTRUDE option makes the sides slope inward?","Taper angle","Path","Direction","Mirror"],
+["A spring or coil is best created with…","SWEEP along a helix path","BOX","SPHERE","WEDGE"],
+["After PRESSPULL, dragging the cursor into a solid usually…","removes material (cuts)","adds material","rotates the solid","changes the UCS"]];
+const N5=[["Which tool offers Zoom, Orbit and Pan in one wheel?","SteeringWheel","ViewCube","UCS icon","Layer Manager"],
+["Which standard view looks straight down on the model?","Top","Front","Right","Left"],
+["Which preset gives a front-right-above 3D look?","SE Isometric","Top","Bottom","Left"],
+["ZOOM Extents…","fits all objects in the window","returns to the previous view","deletes hidden lines","rotates the model"],
+["Which view shows height and width straight-on from the front?","Front","Top","Bottom","SW Isometric"],
+["Which visual style best shows hidden edges through the model?","Wireframe","Realistic","Conceptual","Shaded"],
+["Orbiting changes…","the viewing direction, not the model","the model's dimensions","the UCS origin","the layer"],
+["Panning changes…","the view position without rotating","the model size","the solid's color","the units"],
+["ZOOM Window…","zooms into a rectangular area","orbits the model","extrudes a profile","changes the UCS"],
+["Double-clicking the wheel button performs…","Zoom Extents","3D Orbit","Extrude","Close drawing"]];
+const B0=BANK.length;BANK.push(...N1,...N2,...N3,...N4,...N5);
+const rg=(a,n)=>Array.from({length:n},(_,i)=>a+i);
+const TOPICS=[[0,1,2,32,...rg(B0,10)],[6,7,8,9,10,28,33,...rg(B0+10,7)],[11,12,13,14,15,16,29,30,31,34,...rg(B0+17,4)],[17,18,19,20,21,22,23,24,25,27,35,...rg(B0+21,3)],[3,4,5,26,...rg(B0+24,10)]];
+const TN=["Workspace","UCS","Primitives","Operations","Navigation"];
+const P=(r,a,b)=>a+Math.floor(r()*(b-a+1)),pt=(x,y)=>`(${x}, ${y})`;
+const mk=(q,c,ds,f=x=>x)=>{const cs=f(c),w=[];for(const d of ds){const t=f(d);if(t!==cs&&!w.includes(t))w.push(t)}return[q,cs,...w.slice(0,3)]};
+const GEN=[
+r=>{const S=[["Wireframe","shows all edges as lines"],["Hidden","removes lines hidden behind faces"],["Realistic","shows materials and textures"],["Shaded","shows smooth colored faces"],["X-ray","makes faces semi-transparent"],["2D Wireframe","shows the classic 2D line display"]];return shuf(S,r).slice(0,2).map(a=>[`Which visual style ${a[1]}?`,a[0],...shuf(S.filter(x=>x!==a),r).slice(0,3).map(x=>x[0])])},
+r=>{const a=P(r,2,9)*10,b=P(r,2,9)*10,x=P(r,1,9)*5,y=P(r,1,9)*5;return[
+mk(`The UCS origin is moved to WCS ${pt(a,b)}. A point at ${pt(x,y)} in the UCS has what WCS coordinates?`,pt(a+x,b+y),[pt(x,y),pt(a-x,b-y),pt(a+x+10,b+y),pt(a,b),pt(a+y,b+x+5)]),
+mk(`The UCS origin is at WCS ${pt(a,b)}. A point at WCS ${pt(a+x,b+y)} has what UCS coordinates?`,pt(x,y),[pt(a+x,b+y),pt(x+a,y-b),pt(x+10,y),pt(y,x+5),pt(-x,-y)])]},
+r=>{const L=P(r,2,9)*10,W=P(r,2,9)*10,H=P(r,1,9)*5,d=P(r,2,10)*10,h=P(r,2,9)*10,f=x=>x.toLocaleString("en-US")+" mm³",V=Math.round(Math.PI*d*d/4*h);return[
+mk(`A BOX has length ${L} mm, width ${W} mm and height ${H} mm. Its volume is…`,L*W*H,[L*W+H,L+W+H,L*W*H*2,L*W*H+L,L*H*2+W],f),
+mk(`A CYLINDER has a diameter of ${d} mm and a height of ${h} mm. Its volume (rounded) is…`,V,[Math.round(Math.PI*d*d*h),Math.round(Math.PI*d*h),Math.round(Math.PI*d*d/2*h),d*d*h],f)]},
+r=>{const w=P(r,2,9)*5,h=P(r,2,9)*10,s=P(r,4,9)*10,e=P(r,5,9)*10,c=P(r,1,4)*5,f=x=>x+" mm";return[
+mk(`A rectangle ${w} mm wide and ${h} mm tall is revolved 360° about its left vertical edge. The diameter of the resulting solid is…`,2*w,[w,h,w+h,2*h,4*w,2*w+h,3*w,w+5],f),
+mk(`A ${s} mm square is extruded ${e} mm, then PRESSPULL cuts the top face down ${c} mm. The final height is…`,e-c,[e+c,e,c,s-c],f)]},
+r=>{const A=[["Pan","hold the wheel button and drag"],["3D Orbit","hold Shift + the wheel button and drag"],["Zoom in/out","scroll the wheel"],["Zoom Extents","double-click the wheel button"],["ViewCube view change","click a ViewCube face or corner"],["Zoom Window","drag a rectangle after choosing ZOOM Window"]];return shuf(A,r).slice(0,2).map(a=>[`Which action happens when you ${a[1]}?`,a[0],...shuf(A.filter(x=>x!==a),r).slice(0,3).map(x=>x[0])])}];
+// seeded random
+function hash(s){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function shuf(arr,r){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+let S=null,active=false;
+const attKey=e=>"att:"+e.toLowerCase();
+const isOpen=()=>ls.g("locked")!=="1";
+const TT=["Topic 1: The 3D Modeling Workspace","Topic 2: User Coordinate System (UCS)","Topic 3: Primitive Solids","Topic 4: Extrude, Revolve, Loft, Sweep, PressPull","Topic 5: Viewing and Navigation in 3D Space"];
+const pk=()=>"prog:"+S.em.toLowerCase(),save=()=>ls.s(pk(),JSON.stringify(S));
+let away=false;
+$("start").onclick=()=>{
+ const ln=$("ln").value.trim(),fn=$("fn").value.trim(),mi=$("mi").value.trim().toUpperCase(),sec=$("sec").value,em=$("em").value.trim();
+ const er=$("rerr");
+ if(!isOpen())return er.textContent="The quiz is currently closed by the instructor.";
+ if(!ln||!fn||!mi||!sec)return er.textContent="Please complete last name, first name, middle initial and section.";
+ if(!/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(em))return er.textContent="Please enter a valid email address.";
+ er.textContent="";
+ let sv=null;try{sv=JSON.parse(ls.g("prog:"+em.toLowerCase())||"null")}catch(e){}
+ if(sv&&sv.items&&!sv.fin){S=sv}
+ else{
+  const att=(parseInt(ls.g(attKey(em))||"0")+1);ls.s(attKey(em),att);
+  const r=rng(hash(`${ln}|${fn}|${mi}|${sec}|${em.toLowerCase()}|${att}`));
+  const items=TOPICS.flatMap((Pl,t)=>shuf([...shuf(Pl,r).slice(0,8).map(i=>BANK[i]),...GEN[t](r)],r).map(b=>{const opts=shuf(b.slice(1).map((x,i)=>({t:x,ok:i===0})),r);return{tp:t,q:b[0],opts,ans:b[1],pick:null}}));
+  S={name:`${ln}, ${fn} ${mi}.`,sec,em,att,items,started:now(),td:[0,0,0,0,0],tf:[0,0,0,0,0],cur:0};
+ }
+ $("reg").classList.add("hide");$("quiz").classList.remove("hide");save();show(S.td.some(Boolean)?"Welcome back! Your saved progress was restored.":"");
+};
+function show(msg){
+ const t=S.cur,n=S.td.filter(Boolean).length;
+ $("qinfo").innerHTML=`<b>${S.name}</b> • Section ${S.sec} • ${S.em}<br>Attempt #${S.att} • Started: ${S.started}<div class="bar"><i style="width:${n*20}%"></i></div><div class="chips">${TN.map((x,i)=>`<span class="${S.td[i]?"ok":i===t?"cur":""}">${S.td[i]?"✔ ":""}${x}</span>`).join("")}</div>`;
+ $("qs").innerHTML=(msg?`<div class="warn">${msg}</div>`:"")+`<h3>${TT[t]} <small>(${t+1} of 5 • 10 items)</small></h3>`;
+ S.items.forEach((it,i)=>{if(it.tp!==t)return;const d=document.createElement("div");d.className="card q";
+  d.innerHTML=`<h3>${i%10+1}. ${it.q}</h3>`+it.opts.map((o,j)=>`<label class="opt"><input type="radio" name="q${i}" value="${j}"${it.pick===j?" checked":""}><span>${o.t}</span></label>`).join("");
+  d.onchange=e=>{it.pick=+e.target.value;save()};$("qs").appendChild(d)});
+ $("submit").textContent=t===4?"Submit Quiz & Get Result":"Submit Topic & Continue ▶";
+ $("qerr").textContent="";active=true;scrollTo(0,0);
+}
+function lock(auto){
+ const t=S.cur;S.td[t]=1;if(auto)S.tf[t]=1;
+ if(t<4){S.cur++;save();show(auto?"⚠️ The previous topic was closed automatically because you left the tab. Unanswered items count as wrong.":"✅ Topic saved. You may take a break and continue later using the same email.")}
+ else finish();
+}
+function leave(){if(!active||away)return;away=true;active=false;lock(true)}
+document.addEventListener("visibilitychange",()=>{if(document.hidden)leave();else away=false});
+window.addEventListener("blur",leave);window.addEventListener("focus",()=>away=false);
+$("submit").onclick=()=>{const t=S.cur;if(S.items.some(i=>i.tp===t&&i.pick===null))return $("qerr").textContent="Please answer all 10 items in this topic.";active=false;lock(false)};
+$("later").onclick=()=>{active=false;save();$("quiz").classList.add("hide");$("reg").classList.remove("hide");$("rerr").textContent="Progress saved. Enter the same name and email later to continue where you stopped."};
+function finish(){
+ active=false;S.fin=1;
+ S.done=now();S.auto=S.tf.some(Boolean);S.score=S.items.filter(i=>i.pick!==null&&i.opts[i.pick].ok).length;S.ts=TN.map((n,t)=>n+" "+S.items.filter(i=>i.tp===t&&i.pick!==null&&i.opts[i.pick].ok).length+"/10"+(S.tf[t]?"*":"")).join(" | ")+(S.auto?"  (* closed by leaving tab)":"");
+ ls.s(pk(),"");
+ $("quiz").classList.add("hide");$("done").classList.remove("hide");
+ $("dmsg").textContent=`Score: ${S.score}/50 • Attempt #${S.att} • ${S.done}. Your result image was downloaded.`+(S.auto?" Some topics were closed automatically because you left the tab.":"");
+ drawResult();download();send();
+ const log=JSON.parse(ls.g("log")||"[]");log.push([S.done,S.name,S.sec,S.em,S.att,S.score]);ls.s("log",JSON.stringify(log));
+}
+function drawResult(){
+ const cv=$("cv"),W=1000,x=cv.getContext("2d"),L=[];
+ const wrap=(t,f,c,ind)=>{x.font=f;let line="";t.split(" ").forEach(w=>{const n=line?line+" "+w:w;if(x.measureText(n).width>W-80-ind&&line){L.push([line,f,c,ind]);line=w}else line=n});L.push([line,f,c,ind])};
+ L.push(["3D Mechanical Modeling – Quiz Result","bold 30px Arial","#1d2b3a",0]);
+ [`Name: ${S.name}`,`Section: ${S.sec}`,`Email: ${S.em}`,`Number of attempts: ${S.att}`,`Time stamp: ${S.done}`,`Score: ${S.score} / 50`+(S.auto?"  (auto-closed: left tab)":"")].forEach((t,i)=>L.push([t,i==5?"bold 26px Arial":"20px Arial",i==5?"#1f5f9e":"#1d2b3a",0]));
+ wrap("Topic scores: "+S.ts,"15px Arial","#1d2b3a",0);L.push(["","16px Arial","#000",0],["ANSWER KEY","bold 22px Arial","#1f5f9e",0]);
+ S.items.forEach((it,i)=>{const ok=it.pick!==null&&it.opts[it.pick].ok;
+  wrap(`${i+1}. ${it.q}`,"bold 16px Arial","#1d2b3a",0);
+  wrap(`Your: ${it.pick===null?"(none)":it.opts[it.pick].t} ${ok?"✔":"✘"}  |  Key: ${it.ans}`,"15px Arial",ok?"#1b7a2e":"#b00020",24)});
+ const H=L.length*27+60;cv.width=W;cv.height=H;
+ x.fillStyle="#f7f0dc";x.fillRect(0,0,W,H);x.strokeStyle="rgba(31,95,158,.12)";
+ for(let i=0;i<W;i+=40){x.beginPath();x.moveTo(i,0);x.lineTo(i,H);x.stroke()}for(let j=0;j<H;j+=40){x.beginPath();x.moveTo(0,j);x.lineTo(W,j);x.stroke()}
+ x.strokeStyle="#1f5f9e";x.lineWidth=4;x.strokeRect(10,10,W-20,H-20);
+ let y=50;L.forEach(l=>{x.font=l[1];x.fillStyle=l[2];x.fillText(l[0],40+l[3],y);y+=27});
+ x.save();x.globalAlpha=.1;x.fillStyle="#1d2b3a";x.font="bold 34px Arial";x.rotate(-Math.PI/6);
+ for(let a=-H;a<W+H;a+=300)for(let b=0;b<H+W;b+=130)x.fillText(OWNER,a,b);x.restore();
+}
+function download(){const a=document.createElement("a");a.href=$("cv").toDataURL("image/png");
+ a.download=`Result_${S.sec}_${S.name.replace(/[^\w]+/g,"_")}_Attempt${S.att}.png`;a.click()}
+$("dl").onclick=download;
+function send(){
+ const key=S.items.map((it,i)=>`${i+1}:${it.pick===null?"-":it.opts[it.pick].t}|${it.ans}`).join(" ;; ");
+ const p={module:"3D Mechanical Modeling",timestamp:S.done,started:S.started,name:S.name,section:S.sec,email:S.em,attempt:S.att,score:S.score,total:50,topics:S.ts,autoClosed:S.auto?"YES":"NO",answerKey:key};
+ try{fetch(url(),{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(p)}).catch(()=>{})}catch(e){}
+}
+// admin
+$("adm").onclick=e=>{e.preventDefault();$("admin").classList.remove("hide")};
+const closeA=()=>{$("admin").classList.add("hide");$("alogin").classList.remove("hide");$("apanel").classList.add("hide");$("apw").value=""};
+$("aclose0").onclick=$("aclose").onclick=closeA;
+$("alog").onclick=()=>{if($("apw").value!==ADMIN_PW)return $("aerr").textContent="Incorrect password.";
+ $("alogin").classList.add("hide");$("apanel").classList.remove("hide");$("aurl").value=url();$("alock").checked=!isOpen();renderLog()};
+function renderLog(){const l=JSON.parse(ls.g("log")||"[]");$("atbl").innerHTML="<tr><th>Time</th><th>Name</th><th>Sec</th><th>Email</th><th>Att</th><th>Score</th></tr>"+l.map(r=>"<tr>"+r.map(c=>`<td>${String(c).replace(/</g,"&lt;")}</td>`).join("")+"</tr>").join("")}
+$("asave").onclick=()=>{ls.s("sheetUrl",$("aurl").value.trim());alert("Saved.")};
+$("alock").onchange=e=>ls.s("locked",e.target.checked?"1":"0");
+$("aclear").onclick=()=>{if(confirm("Clear logged attempts on this device?")){ls.s("log","[]");try{Object.keys(localStorage).filter(k=>k.startsWith("att:")).forEach(k=>localStorage.removeItem(k))}catch(e){}renderLog()}};
+</script></body></html>
